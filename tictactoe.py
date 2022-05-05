@@ -1,17 +1,23 @@
+# YouTube Video : https://youtu.be/V9MbQ2Xl4CE
+
 from tkinter import *
 import random
 
+xWins = 0
+oWins = 0
+ties = 0
+
+
 def nextTurn(row, column):
-    global player
-    xWins = 0
-    oWins = 0
+
+    global player, xWins, oWins, ties
 
     if buttons[row][column]['text'] == '' and checkWinner() is False:
         if player == players[0]:
             buttons[row][column]['text'] = player
             if checkWinner() is False:
                 player = players[1]
-                label.config(text=(players[1]+ '\'s Turn'))
+                label.config(text=(players[1] + '\'s Turn'))
 
             elif checkWinner() is True:
                 label.config(text=(players[0] + ' wins!'))
@@ -23,7 +29,7 @@ def nextTurn(row, column):
                     oWinsLabel.config(text=f'O : {oWins} wins')
 
             elif checkWinner() == 'Tie':
-                label.config(text=('It\'s a Tie!'))
+                label.config(text='It\'s a Tie!')
         else:
             buttons[row][column]['text'] = player
             if checkWinner() is False:
@@ -39,7 +45,9 @@ def nextTurn(row, column):
                     oWinsLabel.config(text=f'O : {oWins} wins')
 
             elif checkWinner() == 'Tie':
-                label.config(text=('It\'s a Tie!'))
+                label.config(text='It\'s a Tie!')
+                ties += 1
+                tieWinsLabel.config(text=f'Ties : {ties}')
 
 
 def checkWinner():
@@ -91,6 +99,7 @@ def emptySpaces():
     else:
         return True
 
+
 def newGame():
     global player
     player = random.choice(players)
@@ -100,9 +109,12 @@ def newGame():
         for column in range(3):
             buttons[row][column].config(text='', bg='#F0F0F0')
 
+
 def resetScore():
     oWinsLabel.config(text=f'O : 0 wins')
     xWinsLabel.config(text=f'X : 0 wins')
+    tieWinsLabel.config(text='Ties : 0')
+
 
 window = Tk()
 window.title('Tic Tac Toe')
@@ -111,8 +123,8 @@ player = random.choice(players)
 buttons = [[0, 0, 0],
            [0, 0, 0],
            [0, 0, 0]]
-label = Label(text= player + '\'s Turn')
-label.pack(side ='top')
+label = Label(text=player + '\'s Turn')
+label.pack(side='top')
 
 resetButton = Button(text='Start New Game', command=newGame)
 resetButton.pack(side='top')
@@ -120,11 +132,13 @@ resetButton.pack(side='top')
 scoreLabel = Label(text='Current Score')
 xWinsLabel = Label(text='X : 0 wins')
 oWinsLabel = Label(text='O : 0 wins')
+tieWinsLabel = Label(text='Ties : 0')
+resetScoreButton = Button(text='Reset Score', command=resetScore)
+resetScoreButton.pack(side='bottom')
+tieWinsLabel.pack(side='bottom')
 oWinsLabel.pack(side='bottom')
 xWinsLabel.pack(side='bottom')
 scoreLabel.pack(side='bottom')
-resetScoreButton = Button(text='Reset Score', command=resetScore)
-resetScoreButton.pack(side='bottom')
 
 frame = Frame(window)
 frame.pack()
@@ -133,6 +147,6 @@ frame.pack()
 for row in range(3):
     for column in range(3):
         buttons[row][column] = Button(frame, text='', width=5, height=2, command=lambda row=row, column=column: nextTurn(row, column))
-        buttons[row][column].grid(row=row,column=column)
+        buttons[row][column].grid(row=row, column=column)
 
 window.mainloop()
