@@ -1,4 +1,5 @@
 # YouTube Video : https://youtu.be/V9MbQ2Xl4CE
+# Modifications Made: Added X, O, and Tie score counter. Added a reset button for the X, O, and Tie score counter.
 
 from tkinter import *
 import random
