@@ -118,30 +118,45 @@ def resetScore():
 
 window = Tk()
 window.title('Tic Tac Toe')
+window.geometry('300x300')
 players = ['X', 'O']
 player = random.choice(players)
 buttons = [[0, 0, 0],
            [0, 0, 0],
            [0, 0, 0]]
-label = Label(text=player + '\'s Turn')
+
+# Player label frame
+player_label_frame = Frame(window)
+label = Label(player_label_frame, text=player + '\'s Turn')
 label.pack(side='top')
+player_label_frame.pack(side='top', pady=10)
 
-resetButton = Button(text='Start New Game', command=newGame)
-resetButton.pack(side='top')
+# Score label frame
+score_label_frame = Frame(window)
+scoreLabel = Label(score_label_frame, text='Current Score:')
+scoreLabel.pack(side='top')
+score_label_frame.pack()
 
-scoreLabel = Label(text='Current Score')
-xWinsLabel = Label(text='X : 0 wins')
-oWinsLabel = Label(text='O : 0 wins')
-tieWinsLabel = Label(text='Ties : 0')
-resetScoreButton = Button(text='Reset Score', command=resetScore)
-resetScoreButton.pack(side='bottom')
+# Score frame
+score_frame = Frame(window)
+xWinsLabel = Label(score_frame, text='X : 0 wins')
+oWinsLabel = Label(score_frame, text='O : 0 wins')
+tieWinsLabel = Label(score_frame, text='Ties : 0')
 tieWinsLabel.pack(side='bottom')
-oWinsLabel.pack(side='bottom')
-xWinsLabel.pack(side='bottom')
-scoreLabel.pack(side='bottom')
+oWinsLabel.pack(side='right')
+xWinsLabel.pack(side='left')
+score_frame.pack()
 
 frame = Frame(window)
 frame.pack()
+
+# Reset Game Button frame
+reset_frame = Frame(window)
+resetButton = Button(reset_frame, text='Start New Game', command=newGame)
+resetButton.pack(side='left', pady=10, padx=10)
+resetScoreButton = Button(reset_frame, text='Reset Score', command=resetScore)
+resetScoreButton.pack(side='right')
+reset_frame.pack()
 
 
 for row in range(3):
